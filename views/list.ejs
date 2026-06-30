@@ -17,6 +17,8 @@
             <div class="task-title"><%= todos[task].title %></div>
             <div class="task-description"><%= todos[task].description %></div>
         </li>
+        <a href ="/delete/<%= todos[task]._id %>"class="delete-item">Delete</a>
+            
     <% } %>
 </ul>
     </div>
