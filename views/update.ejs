@@ -11,10 +11,11 @@
 <h1>Update Task Page</h1>
 
 <div class="container">
-    <form class="todo-form" action="/update" method="POST">
-        <input class="form-input" type="text" name="title" placeholder="Task Title" required>
-        <textarea class="form-textarea" name="description" placeholder="Task Description" required></textarea>
+    <form class="todo-form" action="/update/<%=result._id%>" method="POST">
+        <input class="form-input" type="text" name="title" placeholder="Task Title" value="<%= result.title %>" required>
+        <textarea class="form-textarea" name="description" placeholder="Task Description" required><%= result.description %></textarea>
         <button class="form-button" type="submit">Update Task</button>
     </form>
+    </div>
 </body>
 </html>

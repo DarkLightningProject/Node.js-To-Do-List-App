@@ -29,10 +29,30 @@ app.get("/add",(req,resp)=>{
     resp.render("add")
 })
 app.get("/update",(req,resp)=>{
-    resp.render("update")
-})
-app.post("/update",(req,resp)=>{
     resp.redirect("/")
+})
+app.get("/update/:id",async(req,resp)=>{
+    const db = await connection()
+    const collection = db.collection(collectionName);
+    const result = await collection.findOne({_id:new ObjectId(req.params.id)})
+    if(result){
+        resp.render("update", { result })
+    }else{
+        resp.redirect("/")
+    }
+})
+app.post("/update/:id",async(req,resp)=>{
+    const db = await connection()
+    const collection = db.collection(collectionName);
+    const result = await collection.updateOne(
+        {_id:new ObjectId(req.params.id)},
+        {$set: req.body}
+    )
+    if(result){
+        resp.redirect("/")
+    }else{
+        resp.redirect(`/update/${req.params.id}`)
+    }
 })
 app.post("/add",async(req,resp)=>{
     const db = await connection()
