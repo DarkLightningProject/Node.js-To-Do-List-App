@@ -80,4 +80,21 @@ app.get("/delete/:id",async(req,resp)=>{
 
     
 })
+app.post("/multi-delete",async(req,resp)=>{
+    const db = await connection()
+    const collection = db.collection(collectionName);
+    let selectedTaskIds=undefined;
+    if(Array.isArray(req.body.selectedTask)){
+         selectedTaskIds = req.body.selectedTask.map(id => new ObjectId(id));
+    }else{
+        selectedTaskIds = [new ObjectId(req.body.selectedTask)];
+    }
+        
+    const result = await collection.deleteMany({_id: { $in: selectedTaskIds }});
+    if(result){
+        resp.redirect("/")
+    }else{
+        resp.send("/some error")
+    }
+})
 app.listen(3200)
